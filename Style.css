@@ -4,6 +4,7 @@
   --primary: #1e3a8a;
   --muted: #444;
   --card-bg: #ffffff;
+  --header-height: 64px;
 }
 * {
   box-sizing: border-box;
@@ -22,7 +23,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   position: relative;
   min-height: 100vh;
+  font-weight: 500;
 }
+
 body::after {
   content: "";
   position: fixed;
@@ -50,8 +53,13 @@ body::after {
   background: var(--primary);
   color: #fff;
   padding: 0 1rem;
-  position: relative;
-  z-index: 2;
+  /* make header stick to top and cover full width */
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  box-shadow: 0 2px 6px rgba(16, 24, 40, 0.06);
 }
 .navbar {
   display: flex;
@@ -60,7 +68,7 @@ body::after {
   gap: 1rem;
   max-width: 1100px;
   margin: 0 auto;
-  height: 64px;
+  height: var(--header-height);
 }
 .logo {
   font-weight: 700;
@@ -88,8 +96,11 @@ body::after {
   background: rgba(255, 255, 255, 0.08);
 }
 @media (min-width: 1000px) {
+  :root {
+    --header-height: 90px;
+  }
   .navbar {
-    height: 90px;
+    height: var(--header-height);
   }
   .logo {
     font-size: 1.25rem;
@@ -108,7 +119,7 @@ body::after {
 @media (max-width: 800px) {
   .nav-links {
     position: fixed;
-    top: 64px;
+    top: var(--header-height);
     right: 0;
     left: 0;
     background: var(--primary);
@@ -292,7 +303,8 @@ button.ghost {
   font-size: 0.95rem;
   color: #666;
 }
-@media (max-width: 800px) {
+/* تعدبلات على التنسيق في الصفحة الرئيسية من اجل الشاشات الاصغر */
+@media (max-width: 700px) {
   .apps-table thead {
     display: none;
   }
@@ -326,6 +338,54 @@ button.ghost {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.6rem;
+  }
+
+  /* تنسيق الطاولة بشكل طولي في الشاشات الصغيرة  */
+  .info-table thead {
+    display: none;
+  }
+  .info-table,
+  .info-table tbody,
+  .info-table tr,
+  .info-table td {
+    display: block;
+    width: 100%;
+  }
+  .info-table tr {
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  }
+  .info-table td {
+    text-align: right;
+    padding: 0.45rem 0.5rem;
+    border-bottom: 0;
+  }
+  .info-table td::before {
+    content: attr(data-label);
+    float: right;
+    font-weight: 700;
+    color: var(--primary);
+    margin-left: 0.4rem;
+  }
+
+  /* احجام خط اصغر في الشاشات الاصغر  */
+  body,
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+@media (max-width: 400px) {
+  body,
+  input,
+  select,
+  textarea {
+    font-size: 13px;
+  }
+  .link-for-website {
+    font-size: 11px;
   }
 }
 a {
